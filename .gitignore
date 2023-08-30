@@ -1,0 +1,6 @@
+/.vs
+obj
+*.user
+
+Debug
+Release

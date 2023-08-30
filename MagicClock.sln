@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicClock", "MagicClock\MagicClock.csproj", "{923E204A-2B09-4EBA-B973-103E1F8E8011}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{AD041A7B-6EA2-45F0-8D8F-605D256A16C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{923E204A-2B09-4EBA-B973-103E1F8E8011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923E204A-2B09-4EBA-B973-103E1F8E8011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923E204A-2B09-4EBA-B973-103E1F8E8011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923E204A-2B09-4EBA-B973-103E1F8E8011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD041A7B-6EA2-45F0-8D8F-605D256A16C6}.Debug|Any CPU.ActiveCfg = Debug
+		{AD041A7B-6EA2-45F0-8D8F-605D256A16C6}.Release|Any CPU.ActiveCfg = Release
+		{AD041A7B-6EA2-45F0-8D8F-605D256A16C6}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF18D37A-C6BF-48C6-B0BB-1BB02960DCF7}
+	EndGlobalSection
+EndGlobal
