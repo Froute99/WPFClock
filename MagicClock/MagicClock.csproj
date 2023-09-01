@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="resources\hmm.bmp" />
+    <None Remove="resources\option.bmp" />
     <None Remove="resources\power.bmp" />
     <None Remove="resources\power.png" />
   </ItemGroup>
@@ -30,7 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="resources\hmm.bmp" />
+    <Resource Include="resources\option.bmp" />
     <Resource Include="resources\power.bmp" />
   </ItemGroup>
 

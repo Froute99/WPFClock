@@ -9,6 +9,8 @@ using System.Drawing;
 using Winforms = System.Windows.Forms;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Drawing.Printing;
+using System.Windows.Controls;
 
 namespace MagicClock
 {
@@ -18,6 +20,8 @@ namespace MagicClock
 	public partial class App : Application
 	{
 		private Winforms.NotifyIcon tray;
+
+		OptionWindow optionWindow = null;
 
 		public App()
 		{
@@ -37,11 +41,35 @@ namespace MagicClock
 			tray.Icon = Icon.FromHandle(BitmapImage2Bitmap(mainIcon).GetHicon());
 			tray.Visible = true;
 
+			tray.ContextMenuStrip = new Winforms.ContextMenuStrip();
+
+
+			BitmapImage optionIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/option.bmp", UriKind.RelativeOrAbsolute));
+			tray.ContextMenuStrip.Items.Add("Option", System.Drawing.Image.FromHbitmap(BitmapImage2Bitmap(optionIcon).GetHbitmap()), OnOptionClicked);
 
 			BitmapImage exitIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/power.bmp", UriKind.RelativeOrAbsolute));
-			
-			tray.ContextMenuStrip = new Winforms.ContextMenuStrip();
-			tray.ContextMenuStrip.Items.Add("Exit", Image.FromHbitmap(BitmapImage2Bitmap(exitIcon).GetHbitmap()), OnExitClicked);
+			tray.ContextMenuStrip.Items.Add("Exit", System.Drawing.Image.FromHbitmap(BitmapImage2Bitmap(exitIcon).GetHbitmap()), OnExitClicked);
+		}
+
+		private void OnOptionClicked(object sender, EventArgs e)
+		{
+			if (optionWindow != null) return;
+
+
+			optionWindow = new OptionWindow();
+			optionWindow.ResizeMode = System.Windows.ResizeMode.NoResize;
+			optionWindow.Show();
+
+			//TextBlock popupText = new TextBlock();
+			//popupText.Text = "Popup Text";
+			//popupText.Background = System.Windows.Media.Brushes.LightBlue;
+			//popupText.Foreground = System.Windows.Media.Brushes.Blue;
+
+
+			//MainWindow clock = Window.GetWindow(App.Current.MainWindow) as MainWindow;
+
+			//clock.Test();
+
 		}
 
 		private void OnExitClicked(object sender, EventArgs e)

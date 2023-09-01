@@ -10,7 +10,6 @@
         Background="Transparent" WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Width="400" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Name="label1"
-               FontSize="48" FontFamily="Verdana" Foreground="#B76E79" FontWeight="ExtraBold"
-               />
+               FontSize="48" FontFamily="Verdana" Foreground="#B76E79" FontWeight="ExtraBold"/>
     </Grid>
 </Window>

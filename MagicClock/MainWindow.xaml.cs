@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,18 +18,20 @@ using System.Windows.Shapes;
 
 namespace MagicClock
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public int monitorId = 1;
+		public int offsetX = 525;
+		public int offsetY = 45;
+
 		System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
-		public string Time { get; set; }
+
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
+			label1.Content = "00:00";
 
 			Timer.Tick += new EventHandler(Timer_Click);
 			Timer.Interval = new TimeSpan(0, 0, 1);
@@ -34,36 +39,96 @@ namespace MagicClock
 
 		}
 
+		public void Test()
+		{
+			Window window = GetWindow(label1);
+
+			window.Left = 0;
+			window.Top = 0;
+
+		}
+
 		private void Timer_Click(object sender, EventArgs e)
 		{
 			DateTime d;
 			d = DateTime.Now;
-			label1.Content = d.Hour + " : " + d.Minute;
+			string hourString = d.Hour.ToString();
+			string minuteString = d.Minute.ToString();
 
-			OutlinedTextLabel(label1);
+			if (d.Hour < 10)   hourString = "0" + hourString;
+			if (d.Minute < 10) minuteString = "0" + minuteString;
+
+			label1.Content = hourString + " : " + minuteString;
+
+			OutlineTextLabel(label1);
 		}
+
 
 		protected override void OnRender(DrawingContext drawingContext)
 		{
-			var location = label1.PointToScreen(new Point(625, -15));
-
-			Window window = GetWindow(label1);
-
-			window.Left = location.X;
-			window.Top = location.Y - window.Height;
-
+			ChangeLocation();
 
 			base.OnRender(drawingContext);
 		}
 
 
-		void OutlinedTextLabel(Label lbl)
+
+///
+/// HelperFunctions
+///
+
+		public void ChangeMonitor(int newMonitor)
+		{
+			monitorId = newMonitor;
+		}
+
+		public void ChangeOffset(int x, int y)
+		{
+			offsetX = x;
+			offsetY = y;
+
+			ChangeLocation();
+		}
+
+		void ChangeLocation()
+		{
+			int MonitorWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+
+			Screen[] screens = Screen.AllScreens;
+			//int screenId = monitorId;
+
+
+			Window window = GetWindow(label1);
+
+			var screen = screens[0];
+			var area = screen.WorkingArea;
+
+			window.Left = area.Left;
+			window.Top = area.Top;
+
+
+			float ResolutionPortion = (float)MonitorWidth / area.Width;
+
+			float desiredX = area.Left + (area.Width - offsetX) * ResolutionPortion;
+			float desiredY = area.Top + offsetY * ResolutionPortion;
+			var location = label1.PointToScreen(new Point(desiredX, desiredY));
+
+			Trace.WriteLine(desiredX);
+			Trace.WriteLine(desiredY);
+
+			window.Left = location.X;
+			window.Top = location.Y;
+		}
+
+
+		void OutlineTextLabel(System.Windows.Controls.Label lbl)
 		{
 			FormattedText formattedText = new FormattedText(lbl.Content.ToString(),
-				System.Globalization.CultureInfo.GetCultureInfo("ko-kr"),
-				FlowDirection.LeftToRight,
-				new Typeface(lbl.FontFamily, lbl.FontStyle, lbl.FontWeight, lbl.FontStretch),
-				lbl.FontSize, Brushes.Black);
+											  System.Globalization.CultureInfo.GetCultureInfo("ko-kr"),
+											  System.Windows.FlowDirection.LeftToRight,
+											  new Typeface(lbl.FontFamily, lbl.FontStyle, lbl.FontWeight, lbl.FontStretch),
+											  lbl.FontSize,
+											  Brushes.Black);
 
 			formattedText.TextAlignment = TextAlignment.Center;
 
